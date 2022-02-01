@@ -11,7 +11,8 @@ const getCharacters = async () => {
 
 const init = async () => {
   const characters = await getCharacters();
-  console.log(characters.results);
+  // console.log(characters.results); // aqui ya estan en el arreglo
+  createCards(characters.results);
 }
 init();
 
@@ -27,19 +28,45 @@ cardCharacter = (character) => {
   const titleCharacter = document.createElement('h5');
   const btnByIdCharacter = document.createElement('a');
 
-  // Añadir sus clases
-  cardBootstrap.classList.add('card', 'mt-4');
-  imgCard.classList.add('card-img-top', 'mt-2');
-  cardBody.classList.add('card-body');
-  titleCharacter.classList.add('card-title');
-  btnByIdCharacter.classList.add('btn','btn-secondary');
+  // textos de los elementos
+  const nameCharacter = document.createTextNode(character.name);
+  const textButtonCharacter = document.createTextNode('Ir al personaje');
 
+  // Añadir sus clases
+  cardBootstrap.classList.add('card','mt-4');
+  imgCard.classList.add('card-img-top','mt-2');
+  cardBody.classList.add('card-body');
+  titleCharacter.classList.add('card-title', 'text-center');
+  btnByIdCharacter.classList.add('btn','btn-secondary', 'mb-2');
+
+  // console.log(character.image);
+  titleCharacter.appendChild(nameCharacter);
+  btnByIdCharacter.appendChild(textButtonCharacter);
+  imgCard.src=character.image;
+  
+  // el renderizado 
   cardBootstrap.append(imgCard, cardBody, btnByIdCharacter);
   cardBody.append(titleCharacter);
   rowCards.append(cardBootstrap);
 
 }
 
+// Creacion de Cards
+createCards = (characters) => {
+  console.log(characters);
+  characters.map(element =>cardCharacter(element));
+}
+/**Llamar al formulario **/
+// event implicito
+formData.addEventListener('submit',handleSubmit);
+
+
+function handleSubmit(event) {
+  event.preventDefault();
+  // console.log(this);
+  const form = new FormData(this);
+  console.log(form.get('character'));
+}
 
 
 
