@@ -9,6 +9,16 @@ const getCharacters = async () => {
   return data;
 };
 
+const getCharacterForName = async(nameCharacter) => {
+  const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${nameCharacter}`);
+  const data = await response.json();
+  return data;
+}
+
+const cleanRow = () => {
+  rowCards.innerHTML = '';
+}
+
 const init = async () => {
   const characters = await getCharacters();
   // console.log(characters.results); // aqui ya estan en el arreglo
@@ -65,7 +75,10 @@ function handleSubmit(event) {
   event.preventDefault();
   // console.log(this);
   const form = new FormData(this);
-  console.log(form.get('character'));
+  cleanRow();
+  // console.log(form.get('character'));
+  // (()=>{})()
+  getCharacterForName(form.get('character')).then( data => createCards(data.results)).catch(err => console.log(err))
 }
 
 
